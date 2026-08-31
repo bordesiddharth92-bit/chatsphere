@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChatSphere V2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e9edef;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#111}.app{width:min(430px,100vw);height:100vh;margin:auto;background:#f7f7f7;position:relative;overflow:hidden}.hidden{display:none!important}
+.top{height:82px;padding:30px 16px 8px;background:#f7f7f7;border-bottom:1px solid #ddd;display:flex;align-items:end;justify-content:space-between}.title{font-size:22px;font-weight:750}.top button,.icon{border:0;background:none;font-size:23px;cursor:pointer}.screen{height:calc(100vh - 152px);overflow:auto}.search{margin:10px 14px;padding:10px 14px;background:#e9e9e9;border-radius:10px;color:#777}.row{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid #e7e7e7;background:#fafafa;cursor:pointer}.avatar{width:50px;height:50px;border-radius:10px;display:grid;place-items:center;background:#222;color:#fff;font-weight:700;flex:none}.a{background:#4c8c6a}.b{background:#6675c7}.c{background:#d17852}.d{background:#8865a8}.e{background:#4d98a2}.info{min-width:0;flex:1}.name{font-weight:650}.sub{font-size:13px;color:#777;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.time{float:right;color:#999;font-size:11px}.nav{position:absolute;bottom:0;left:0;right:0;height:70px;border-top:1px solid #ddd;background:#fafafa;display:flex;justify-content:space-around}.nav button{border:0;background:none;color:#777;font-size:11px;padding:8px 12px;cursor:pointer}.nav button.active{color:#111;font-weight:700}.nav span{display:block;font-size:23px;margin-bottom:2px}.cards{padding:14px}.card{background:white;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 2px 10px #0000000c}.card button,.primary{border:0;border-radius:10px;padding:10px 14px;background:#111;color:#fff;cursor:pointer}.input{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:7px 0;background:white}.modal{position:absolute;inset:0;background:#0007;display:flex;align-items:flex-end;z-index:20}.sheet{background:#f7f7f7;width:100%;border-radius:20px 20px 0 0;padding:20px;max-height:80vh;overflow:auto}.sheet h2{margin-top:0}.close{float:right;border:0;background:#ddd;border-radius:50%;width:30px;height:30px}.chat{position:absolute;inset:0;background:#ededed;z-index:10;display:flex;flex-direction:column}.chathead{height:82px;padding:30px 12px 8px;background:#f7f7f7;border-bottom:1px solid #ddd;display:flex;align-items:end;gap:10px}.chathead button{border:0;background:none;font-size:23px}.chatname{font-weight:700;flex:1}.messages{flex:1;overflow:auto;padding:15px}.bubble{max-width:78%;padding:10px 13px;border-radius:10px;margin:7px 0;line-height:1.35}.mine{margin-left:auto;background:#b8e986}.theirs{background:#fff}.composer{padding:9px;background:#f7f7f7;border-top:1px solid #ddd;display:flex;gap:7px}.composer input{flex:1;border:1px solid #ccc;border-radius:22px;padding:11px}.composer button{border:0;border-radius:20px;background:#111;color:#fff;padding:0 15px}.toast{position:absolute;z-index:50;bottom:85px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 15px;border-radius:10px;display:none;font-size:13px}.profile{padding:22px}.big{display:flex;gap:15px;align-items:center}.big .avatar{width:76px;height:76px;font-size:25px}.menu{background:white;padding:16px;border-bottom:1px solid #eee;cursor:pointer}
+</style></head>
+<body>
+<div class="app">
+<div id="home">
+<header class="top"><div class="title" id="title">Chats</div><div><button onclick="newChat()">＋</button><button onclick="search()">⌕</button></div></header>
+<main class="screen">
+<section id="chats" class="tab"><div class="search">⌕ Search messages or contacts</div><div id="chatList"></div></section>
+<section id="contacts" class="tab hidden"><div class="search"><input id="contactSearch" class="input" placeholder="Search contacts" oninput="renderContacts()"></div><div class="cards"><div class="card"><b>👥 New Friends</b><p>Friend requests</p><button onclick="addContact()">Add contact</button></div></div><div id="contactList"></div></section>
+<section id="discover" class="tab hidden"><div class="cards"><div class="card" onclick="toast('Moments opened')"><h3>✨ Moments</h3><p>Post photos, videos and updates.</p></div><div class="card" onclick="toast('QR scanner demo')"><h3>▣ Scan</h3><p>Scan QR codes to add friends.</p></div><div class="card" onclick="toast('Mini Apps opened')"><h3>◈ Mini Apps</h3><p>Shopping, bookings, games and services.</p></div><div class="card" onclick="wallet()"><h3>💳 Wallet</h3><p>Balance and transactions.</p></div></div></section>
+<section id="me" class="tab hidden"><div class="profile"><div class="big"><div class="avatar">S</div><div><h2 id="meName">Siddharth</h2><p>ChatSphere ID: siddharth01</p></div></div></div><div class="menu" onclick="editProfile()">👤 Edit Profile　›</div><div class="menu" onclick="toast('Privacy settings')">🔒 Privacy　›</div><div class="menu" onclick="toast('Notifications settings')">🔔 Notifications　›</div><div class="menu" onclick="wallet()">💳 Wallet　›</div><div class="menu" onclick="toast('Settings opened')">⚙️ Settings　›</div></section>
+</main>
+<nav class="nav"><button class="active" onclick="tab('chats','Chats',this)"><span>💬</span>Chats</button><button onclick="tab('contacts','Contacts',this)"><span>👥</span>Contacts</button><button onclick="tab('discover','Discover',this)"><span>◎</span>Discover</button><button onclick="tab('me','Me',this)"><span>◉</span>Me</button></nav>
+</div>
+
+<div id="chat" class="chat hidden"><header class="chathead"><button onclick="closeChat()">‹</button><div id="chatAvatar" class="avatar a">AM</div><div id="chatName" class="chatname">Aarav</div><button onclick="call('Voice')">☎</button><button onclick="call('Video')">▣</button></header><div id="messages" class="messages"></div><div class="composer"><button onclick="attach()">＋</button><input id="msg" placeholder="Message" onkeydown="if(event.key==='Enter')send()"><button onclick="send()">Send</button></div></div>
+
+<div id="modal" class="modal hidden"><div class="sheet"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<div id="toast" class="toast"></div>
+</div>
+<script>
+const seed=[
+{name:'Aarav Mehta',ini:'AM',cls:'a',last:'Hey! Are we meeting today?',msgs:[['t','Hey! Are we meeting today?'],['m',"Yes 👍 Let's meet at 6 PM."]]},
+{name:'Neha Sharma',ini:'NS',cls:'b',last:'📷 Sent a photo',msgs:[['t','Sent a photo 📷'],['m','Nice!'] ]},
+{name:'Rohan Kapoor',ini:'RK',cls:'c',last:'🎙 Voice message · 0:18',msgs:[['t','🎙 Voice message · 0:18']]},
+{name:'Travel Group',ini:'TG',cls:'d',last:'Priya: Mumbai trip confirmed!',msgs:[['t','Priya: Mumbai trip confirmed!'],['m','Great! 🎉']]}
+];
+let data=JSON.parse(localStorage.getItem('cs_v2')||'null')||seed;let current=null;
+function save(){localStorage.setItem('cs_v2',JSON.stringify(data))}
+function renderChats(){chatList.innerHTML=data.map((x,i)=>`<div class="row" onclick="openChat(${i})"><div class="avatar ${x.cls}">${x.ini}</div><div class="info"><div class="name">${x.name}<span class="time">now</span></div><div class="sub">${x.last||''}</div></div></div>`).join('')}
+function renderContacts(){let q=(contactSearch?.value||'').toLowerCase();contactList.innerHTML=data.filter(x=>x.name.toLowerCase().includes(q)).map((x,i)=>`<div class="row" onclick="openChat(${i})"><div class="avatar ${x.cls}">${x.ini}</div><div class="info"><div class="name">${x.name}</div><div class="sub">ChatSphere contact</div></div></div>`).join('')}
+function tab(id,t,b){document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');title.textContent=t;document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderChats();renderContacts()}
+function openChat(i){current=i;chat.classList.remove('hidden');chatName.textContent=data[i].name;chatAvatar.className='avatar '+data[i].cls;chatAvatar.textContent=data[i].ini;renderMessages()}
+function closeChat(){chat.classList.add('hidden');renderChats()}
+function renderMessages(){messages.innerHTML=data[current].msgs.map(x=>`<div class="bubble ${x[0]=='m'?'mine':'theirs'}">${escapeHtml(x[1])}</div>`).join('');messages.scrollTop=messages.scrollHeight}
+function send(){let v=msg.value.trim();if(!v)return;data[current].msgs.push(['m',v]);data[current].last=v;save();msg.value='';renderMessages()}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function newChat(){modalBody.innerHTML='<h2>New Chat</h2>'+data.map((x,i)=>`<div class="row" onclick="closeModal();openChat(${i})"><div class="avatar ${x.cls}">${x.ini}</div><div class="info"><b>${x.name}</b></div></div>`).join('');modal.classList.remove('hidden')}
+function addContact(){let n=prompt('Contact name?');if(!n)return;let ini=n.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();data.push({name:n,ini,cls:'e',last:'New contact',msgs:[]});save();renderContacts();toast('Contact added')}
+function search(){let q=prompt('Search chats');if(q){let i=data.findIndex(x=>x.name.toLowerCase().includes(q.toLowerCase())||(x.last||'').toLowerCase().includes(q.toLowerCase()));i>=0?openChat(i):toast('No results')}}
+function attach(){modalBody.innerHTML='<h2>Attach</h2><div class="card" onclick="closeModal();toast(\\'Photo selected\\')">📷 Photo / Video</div><div class="card" onclick="closeModal();toast(\\'File selected\\')">📄 File</div><div class="card" onclick="closeModal();toast(\\'Location shared\\')">📍 Location</div><div class="card" onclick="closeModal();toast(\\'Voice recording started\\')">🎙 Voice message</div>';modal.classList.remove('hidden')}
+function call(type){modalBody.innerHTML=`<h2>${type} Call</h2><p>Calling <b>${data[current].name}</b>…</p><div class="card" style="text-align:center;font-size:50px">👤</div><button class="primary" onclick="closeModal()">End Call</button>`;modal.classList.remove('hidden')}
+function wallet(){modalBody.innerHTML='<h2>💳 Wallet</h2><div class="card"><small>Available balance</small><h1>₹ 12,450</h1></div><div class="menu">Send Money　›</div><div class="menu">Request Money　›</div><div class="menu">Transactions　›</div><p style="color:#777">Demo wallet — no real money movement.</p>';modal.classList.remove('hidden')}
+function editProfile(){let n=prompt('Your name?',document.getElementById('meName').textContent);if(n){meName.textContent=n;toast('Profile updated')}}
+function closeModal(){modal.classList.add('hidden')}
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',1400)}
+renderChats();renderContacts();
+</script></body></html>
